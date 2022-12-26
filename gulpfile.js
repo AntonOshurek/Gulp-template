@@ -9,6 +9,7 @@ import {deleteSync} from 'del';
 import notify from 'gulp-notify';
 //HTML
 import htmlmin from 'gulp-htmlmin';
+import { htmlValidator } from "gulp-w3c-html-validator";
 //STYLES
 import less from 'gulp-less';
 import plumber from 'gulp-plumber';
@@ -76,6 +77,12 @@ export const html = () => {
 	// .pipe(dest(buildFolder))
 	// .pipe(browserSync.stream());
 };
+
+export function validateMarkup() {
+	return src(`${srcFolder}/**/*.html`)
+		.pipe(htmlValidator.analyzer())
+		.pipe(htmlValidator.reporter({ throwErrors: true }))
+}
 
 //IMAGES
 //copyimg
