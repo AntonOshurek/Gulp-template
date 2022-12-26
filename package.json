@@ -6,7 +6,10 @@
   "scripts": {
     "build": "gulp build"
   },
-  "type": "commonjs",
+	"engines": {
+		"node": ">=16"
+	},
+	"type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AntonOshurek/Gulp-template.git"

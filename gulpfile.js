@@ -1,26 +1,20 @@
-const {
-  src,
-  dest,
-  series,
-  watch,
-	parallel,
-} = require('gulp');
+import gulp from 'gulp';
 
 //SERVER
-const browserSync = require('browser-sync').create();
+import browserSync from 'browser-sync';
 //UTILS
-const rename = require('gulp-rename');
-const del = require('del');
-const notify = require('gulp-notify');
+import rename from 'gulp-rename';
+import del from 'del';
+import notify from 'gulp-notify';
 //HTML
-const htmlmin = require('gulp-htmlmin');
+import htmlmin from 'gulp-htmlmin';
 //STYLES
-const less = require('gulp-less');
-const plumber = require('gulp-plumber');
-const sourcemap = require('gulp-sourcemaps');
-const postcss = require('gulp-postcss');
-const csso = require('postcss-csso');
-const  autoprefixer = require('autoprefixer');
+import less from 'gulp-less';
+import plumber from 'gulp-plumber';
+import sourcemap from 'gulp-sourcemaps';
+import postcss from 'gulp-postcss';
+import csso from 'postcss-csso';
+import  autoprefixer from 'autoprefixer';
 
 // paths
 const srcFolder = './src';
@@ -38,8 +32,18 @@ const paths = {
   // resourcesFolder: `${srcFolder}/resources`,
 };
 
+const {
+  src,
+  dest,
+  series,
+  watch,
+	parallel,
+} = gulp;
+
+browserSync.create();
+
 // Styles
-const stylesLESS = () => {
+export const stylesLESS = () => {
   return src(paths.srcStyles)
     .pipe(plumber(
 			notify.onError({
@@ -61,28 +65,24 @@ const stylesLESS = () => {
     .pipe(sourcemap.write("."))
     .pipe(dest(paths.buildCssFolder))
     .pipe(browserSync.stream());
-}
-exports.stylesLESS = stylesLESS;
-
+};
 
 //HTML
-const html = () => {
+export const html = () => {
   return src([`${srcFolder}/*.html`])
   .pipe(htmlmin({ collapseWhitespace: true }))
   .pipe(dest(buildFolder))
 	// .pipe(dest(buildFolder))
 	// .pipe(browserSync.stream());
 };
-exports.html = html;
 
 //Clean
-const clean = () => {
+export const clean = () => {
   return del([buildFolder]);
 };
-exports.clean = clean;
 
 // Build
-const build = series(
+export const build = series(
   clean,
   // copy,
   parallel(
@@ -92,4 +92,3 @@ const build = series(
     // script,
   ),
 );
-exports.build = build;
