@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-
 //SERVER
 import browserSync from 'browser-sync';
 //UTILS
@@ -30,8 +29,6 @@ const paths = {
   buildJsFolder: `${buildFolder}/scripts`,
   buildCssFolder: `${buildFolder}/styles`,
   buildImgFolder: `${buildFolder}/images`,
-  // srcPartialsFolder: `${srcFolder}/partials`,
-  // resourcesFolder: `${srcFolder}/resources`,
 };
 
 const {
@@ -59,9 +56,9 @@ export const stylesLESS = () => {
       autoprefixer({
 				cascade: false,
 				grid: true,
-				overrideBrowserslist: ["last 5 versions"]
+				overrideBrowserslist: ["last 20 versions"]
 			}),
-      csso()
+      csso() //minify css
     ]))
     .pipe(rename('style.min.css'))
     .pipe(sourcemap.write("."))
@@ -71,11 +68,10 @@ export const stylesLESS = () => {
 
 //HTML
 export const html = () => {
-  return src([`${srcFolder}/*.html`])
+  return src([`${srcFolder}/**/*.html`])
   .pipe(htmlmin({ collapseWhitespace: true }))
   .pipe(dest(buildFolder))
-	// .pipe(dest(buildFolder))
-	// .pipe(browserSync.stream());
+	.pipe(browserSync.stream());
 };
 
 export function validateMarkup() {
@@ -96,6 +92,7 @@ export const clean = async () => {
   return await deleteSync([buildFolder]);
 };
 
+//SERVER
 export function startServer (done) {
 	browserSync.init({
 		server: {
@@ -118,6 +115,7 @@ function watchFiles () {
 	watch(`${srcFolder}/*.html`, series(html, reloadServer));
 }
 
+//SCRIPTS build and developer server
 export function runBuild (done) {
 	series(
 		clean,
