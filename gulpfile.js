@@ -9,6 +9,7 @@ import notify from 'gulp-notify';
 //HTML
 import htmlmin from 'gulp-htmlmin';
 import { htmlValidator } from "gulp-w3c-html-validator";
+import bemlinter from "gulp-html-bemlinter";
 //STYLES
 import less from 'gulp-less';
 import plumber from 'gulp-plumber';
@@ -74,17 +75,22 @@ export const html = () => {
 	.pipe(browserSync.stream());
 };
 
-export function validateMarkup() {
+export const validateMarkup = () => {
 	return src(`${srcFolder}/**/*.html`)
 		.pipe(htmlValidator.analyzer())
 		.pipe(htmlValidator.reporter({ throwErrors: true }))
 }
 
+export const lintBemMarkup = () => {
+	return src(`${srcFolder}/**/*.html`)
+		.pipe(bemlinter())
+}
+
 //IMAGES
 //copyimg
 export const copyImages = () => {
-  return gulp.src(`${paths.srcImgFolder}/**/*.{png,jpg,svg}`)
-  .pipe(gulp.dest(`${paths.buildImgFolder}`))
+  return src(`${paths.srcImgFolder}/**/*.{png,jpg,svg}`)
+  .pipe(dest(`${paths.buildImgFolder}`))
 }
 
 //Clean
