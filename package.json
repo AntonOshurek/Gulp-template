@@ -1,0 +1,23 @@
+{
+  "name": "gulp-template",
+  "version": "0.0.1",
+  "description": "gulp + webpack template for web dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonOshurek/Gulp-template.git"
+  },
+  "keywords": [
+    "gulp",
+    "webpack"
+  ],
+  "author": "Anton Oshurek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonOshurek/Gulp-template/issues"
+  },
+  "homepage": "https://github.com/AntonOshurek/Gulp-template#readme"
+}
