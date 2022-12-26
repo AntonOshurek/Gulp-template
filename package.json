@@ -4,7 +4,7 @@
   "description": "gulp + webpack template for web dev",
   "main": "index.js",
   "scripts": {
-    "test": "gulp validateMarkup --silent && gulp lintBemMarkup",
+    "test": "gulp validateMarkup --silent && gulp lintBemMarkup && stylelint \"./src/styles/**/*.less\" --custom-syntax postcss-less",
     "build": "gulp runBuild",
     "start": "gulp runDev"
   },
@@ -41,6 +41,8 @@
     "gulp-rename": "^2.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-w3c-html-validator": "^5.1.4",
-    "postcss-csso": "^6.0.1"
+    "postcss-csso": "^6.0.1",
+    "postcss-less": "^6.0.0",
+    "stylelint": "^14.16.0"
   }
 }
