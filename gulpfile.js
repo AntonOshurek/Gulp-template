@@ -1,26 +1,21 @@
-const {
-  src,
-  dest,
-  series,
-  watch,
-	parallel,
-} = require('gulp');
-
+import gulp from 'gulp';
 //SERVER
-const browserSync = require('browser-sync').create();
+import browserSync from 'browser-sync';
 //UTILS
-const rename = require('gulp-rename');
-const del = require('del');
-const notify = require('gulp-notify');
+import rename from 'gulp-rename';
+// import del from 'del';
+import {deleteSync} from 'del';
+import notify from 'gulp-notify';
 //HTML
-const htmlmin = require('gulp-htmlmin');
+import htmlmin from 'gulp-htmlmin';
+import { htmlValidator } from "gulp-w3c-html-validator";
 //STYLES
-const less = require('gulp-less');
-const plumber = require('gulp-plumber');
-const sourcemap = require('gulp-sourcemaps');
-const postcss = require('gulp-postcss');
-const csso = require('postcss-csso');
-const  autoprefixer = require('autoprefixer');
+import less from 'gulp-less';
+import plumber from 'gulp-plumber';
+import sourcemap from 'gulp-sourcemaps';
+import postcss from 'gulp-postcss';
+import csso from 'postcss-csso';
+import autoprefixer from 'autoprefixer';
 
 // paths
 const srcFolder = './src';
@@ -34,12 +29,20 @@ const paths = {
   buildJsFolder: `${buildFolder}/scripts`,
   buildCssFolder: `${buildFolder}/styles`,
   buildImgFolder: `${buildFolder}/images`,
-  // srcPartialsFolder: `${srcFolder}/partials`,
-  // resourcesFolder: `${srcFolder}/resources`,
 };
 
+const {
+  src,
+  dest,
+  series,
+  watch,
+	parallel,
+} = gulp;
+
+browserSync.create();
+
 // Styles
-const stylesLESS = () => {
+export const stylesLESS = () => {
   return src(paths.srcStyles)
     .pipe(plumber(
 			notify.onError({
@@ -53,43 +56,81 @@ const stylesLESS = () => {
       autoprefixer({
 				cascade: false,
 				grid: true,
-				overrideBrowserslist: ["last 5 versions"]
+				overrideBrowserslist: ["last 20 versions"]
 			}),
-      csso()
+      csso() //minify css
     ]))
     .pipe(rename('style.min.css'))
     .pipe(sourcemap.write("."))
     .pipe(dest(paths.buildCssFolder))
     .pipe(browserSync.stream());
-}
-exports.stylesLESS = stylesLESS;
-
+};
 
 //HTML
-const html = () => {
-  return src([`${srcFolder}/*.html`])
+export const html = () => {
+  return src([`${srcFolder}/**/*.html`])
   .pipe(htmlmin({ collapseWhitespace: true }))
   .pipe(dest(buildFolder))
-	// .pipe(dest(buildFolder))
-	// .pipe(browserSync.stream());
+	.pipe(browserSync.stream());
 };
-exports.html = html;
+
+export function validateMarkup() {
+	return src(`${srcFolder}/**/*.html`)
+		.pipe(htmlValidator.analyzer())
+		.pipe(htmlValidator.reporter({ throwErrors: true }))
+}
+
+//IMAGES
+//copyimg
+export const copyImages = () => {
+  return gulp.src(`${paths.srcImgFolder}/**/*.{png,jpg,svg}`)
+  .pipe(gulp.dest(`${paths.buildImgFolder}`))
+}
 
 //Clean
-const clean = () => {
-  return del([buildFolder]);
+export const clean = async () => {
+  return await deleteSync([buildFolder]);
 };
-exports.clean = clean;
 
-// Build
-const build = series(
-  clean,
-  // copy,
-  parallel(
-    stylesLESS,
-    html,
-    // createWebp,
-    // script,
-  ),
-);
-exports.build = build;
+//SERVER
+export function startServer (done) {
+	browserSync.init({
+		server: {
+			baseDir: [buildFolder]
+		},
+		cors: true,
+		notify: false,
+		ui: false,
+	});
+	done();
+};
+
+function reloadServer (done) {
+	browserSync.reload();
+	done();
+};
+
+function watchFiles () {
+	watch([`${srcFolder}/less/**/*.less`], series(stylesLESS));
+	watch(`${srcFolder}/*.html`, series(html, reloadServer));
+}
+
+//SCRIPTS build and developer server
+export function runBuild (done) {
+	series(
+		clean,
+	)(done)
+	parallel(
+		html,
+		stylesLESS,
+		copyImages,
+	)(done);
+}
+
+export function runDev (done) {
+	series(
+		runBuild,
+		startServer,
+		watchFiles
+	)(done);
+}
