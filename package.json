@@ -4,12 +4,13 @@
   "description": "gulp + webpack template for web dev",
   "main": "index.js",
   "scripts": {
-    "build": "gulp build"
+    "build": "gulp runBuild",
+    "start": "gulp runDev"
   },
-	"engines": {
-		"node": ">=16"
-	},
-	"type": "module",
+  "engines": {
+    "node": ">=16"
+  },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AntonOshurek/Gulp-template.git"
@@ -28,7 +29,7 @@
     "autoprefixer": "^10.4.13",
     "browser-sync": "^2.27.11",
     "csso": "^5.0.5",
-    "del": "^6.0.0",
+    "del": "^7.0.0",
     "gulp": "^4.0.2",
     "gulp-htmlmin": "^5.0.1",
     "gulp-less": "^5.0.0",

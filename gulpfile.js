@@ -4,7 +4,8 @@ import gulp from 'gulp';
 import browserSync from 'browser-sync';
 //UTILS
 import rename from 'gulp-rename';
-import del from 'del';
+// import del from 'del';
+import {deleteSync} from 'del';
 import notify from 'gulp-notify';
 //HTML
 import htmlmin from 'gulp-htmlmin';
@@ -14,7 +15,7 @@ import plumber from 'gulp-plumber';
 import sourcemap from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
 import csso from 'postcss-csso';
-import  autoprefixer from 'autoprefixer';
+import autoprefixer from 'autoprefixer';
 
 // paths
 const srcFolder = './src';
@@ -76,19 +77,55 @@ export const html = () => {
 	// .pipe(browserSync.stream());
 };
 
+//IMAGES
+//copyimg
+export const copyImages = () => {
+  return gulp.src(`${paths.srcImgFolder}/**/*.{png,jpg,svg}`)
+  .pipe(gulp.dest(`${paths.buildImgFolder}`))
+}
+
 //Clean
-export const clean = () => {
-  return del([buildFolder]);
+export const clean = async () => {
+  return await deleteSync([buildFolder]);
 };
 
-// Build
-export const build = series(
-  clean,
-  // copy,
-  parallel(
-    stylesLESS,
-    html,
-    // createWebp,
-    // script,
-  ),
-);
+export function startServer (done) {
+	browserSync.init({
+		server: {
+			baseDir: [buildFolder]
+		},
+		cors: true,
+		notify: false,
+		ui: false,
+	});
+	done();
+};
+
+function reloadServer (done) {
+	browserSync.reload();
+	done();
+};
+
+function watchFiles () {
+	watch([`${srcFolder}/less/**/*.less`], series(stylesLESS));
+	watch(`${srcFolder}/*.html`, series(html, reloadServer));
+}
+
+export function runBuild (done) {
+	series(
+		clean,
+	)(done)
+	parallel(
+		html,
+		stylesLESS,
+		copyImages,
+	)(done);
+}
+
+export function runDev (done) {
+	series(
+		runBuild,
+		startServer,
+		watchFiles
+	)(done);
+}
