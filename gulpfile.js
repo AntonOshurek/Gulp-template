@@ -17,6 +17,8 @@ import sourcemap from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
 import csso from 'postcss-csso';
 import autoprefixer from 'autoprefixer';
+//JAVASCRIPT
+import webpackStream from 'webpack-stream';
 
 // paths
 const srcFolder = './src';
@@ -39,6 +41,8 @@ const {
   watch,
 	parallel,
 } = gulp;
+
+let isProd = false; // dev by default
 
 browserSync.create();
 
@@ -86,6 +90,50 @@ export const lintBemMarkup = () => {
 		.pipe(bemlinter())
 }
 
+// SCRIPTS
+const scripts = () => {
+  return src(paths.srcMainJs)
+    .pipe(plumber(
+      notify.onError({
+        title: "JS",
+        message: "Error: <%= error.message %>"
+      })
+    ))
+    .pipe(webpackStream({
+      mode: isProd ? 'production' : 'development',
+      output: {
+        filename: 'bundle.js',
+      },
+			watch: false,
+			devtool: "source-map",
+      module: {
+        rules: [{
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  targets: "> 0.25%, not dead",
+									debug: true,
+									corejs: 3,
+									useBuiltIns: "usage"
+                }]
+              ]
+            }
+          }
+        }]
+      }
+    }))
+    .on('error', function (err) {
+      console.error('WEBPACK ERROR', err);
+      this.emit('end');
+    })
+    .pipe(dest(paths.buildJsFolder))
+    .pipe(browserSync.stream());
+}
+
 //IMAGES
 //copyimg
 export const copyImages = () => {
@@ -111,31 +159,45 @@ export function startServer (done) {
 	done();
 };
 
-function reloadServer (done) {
+const reloadServer = (done) => {
 	browserSync.reload();
 	done();
 };
 
-function watchFiles () {
+const watchFiles = () => {
 	watch([`${srcFolder}/less/**/*.less`], series(stylesLESS));
 	watch(`${srcFolder}/*.html`, series(html, reloadServer));
+	watch(`${srcFolder}/scripts/**/*.js`, series(scripts));
 }
+
+const toProd = (done) => {
+  isProd = true;
+  done();
+};
 
 //SCRIPTS build and developer server
 export function runBuild (done) {
 	series(
+		toProd,
 		clean,
 	)(done)
 	parallel(
 		html,
 		stylesLESS,
+		scripts,
 		copyImages,
 	)(done);
 }
 
 export function runDev (done) {
 	series(
-		runBuild,
+		clean,
+	)(done)
+	series(
+		html,
+		stylesLESS,
+		scripts,
+		copyImages,
 		startServer,
 		watchFiles
 	)(done);

@@ -1,6 +1,6 @@
 {
   "name": "gulp-template",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "gulp + webpack template for web dev",
   "main": "index.js",
   "scripts": {
@@ -27,8 +27,12 @@
   },
   "homepage": "https://github.com/AntonOshurek/Gulp-template#readme",
   "devDependencies": {
+    "@babel/core": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
     "autoprefixer": "^10.4.13",
+    "babel-loader": "^9.1.0",
     "browser-sync": "^2.27.11",
+    "core-js": "^3.27.0",
     "csso": "^5.0.5",
     "del": "^7.0.0",
     "gulp": "^4.0.2",
@@ -43,6 +47,8 @@
     "gulp-w3c-html-validator": "^5.1.4",
     "postcss-csso": "^6.0.1",
     "postcss-less": "^6.0.0",
-    "stylelint": "^14.16.0"
+    "stylelint": "^14.16.0",
+    "webpack": "^5.75.0",
+    "webpack-stream": "^7.0.0"
   }
 }
