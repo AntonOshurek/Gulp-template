@@ -75,8 +75,16 @@ export const stylesLESS = () => {
 };
 
 //HTML
-const siteAddress = 'https://www.example.com/'
 export const html = () => {
+	return src([`${srcFolder}/**/*.html`])
+  .pipe(htmlmin({ collapseWhitespace: true }))
+  .pipe(dest(buildFolder))
+	.pipe(gulp.dest('./app'))
+	.pipe(browserSync.stream());
+};
+
+const siteAddress = 'https://www.example.com/'
+export const htmlBuild = () => {
   return src([`${srcFolder}/**/*.html`])
   .pipe(htmlmin({ collapseWhitespace: true }))
   .pipe(dest(buildFolder))
@@ -223,7 +231,7 @@ export function runBuild (done) {
 		clean,
 	)(done)
 	parallel(
-		html,
+		htmlBuild,
 		stylesLESS,
 		scripts,
 		copyImages,
