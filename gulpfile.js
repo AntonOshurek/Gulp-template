@@ -106,16 +106,7 @@ export const htmlBuild = () => {
 	.pipe(browserSync.stream());
 };
 
-export const createSiteMap = () => {
-	return src('app/**/*.html', {
-		read: false
-	})
-	.pipe(sitemap({
-			siteUrl: 'http://www.amazon.com'
-	}))
-	.pipe(gulp.dest('./app'));
-};
-
+//html tests
 export const validateMarkup = () => {
 	return src(`${srcFolder}/**/*.html`)
 		.pipe(htmlValidator.analyzer())
@@ -182,9 +173,10 @@ export const copyImages = () => {
 export const copy = (done) => {
   src([
     `${paths.srcFontsFolder}/*.{woff2,woff}`,
-    `${srcFolder}*.ico`,
+    `${srcFolder}/*.ico`,
+		`${srcFolder}/manifest.webmanifest`,
   ], {
-    base: "source"
+    base: srcFolder
   })
   .pipe(dest(buildFolder))
   done();
