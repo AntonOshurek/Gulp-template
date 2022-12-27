@@ -20,6 +20,14 @@ import autoprefixer from 'autoprefixer';
 //JAVASCRIPT
 import webpackStream from 'webpack-stream';
 
+const {
+  src,
+  dest,
+  series,
+  watch,
+	parallel,
+} = gulp;
+
 // paths
 const srcFolder = './src';
 const buildFolder = './app';
@@ -29,18 +37,11 @@ const paths = {
   srcImgFolder: `${srcFolder}/images`,
   srcFullJs: `${srcFolder}/scripts/**/*.js`,
   srcMainJs: `${srcFolder}/scripts/index.js`,
+	srcFontsFolder: `${srcFolder}/fonts`,
   buildJsFolder: `${buildFolder}/scripts`,
   buildCssFolder: `${buildFolder}/styles`,
   buildImgFolder: `${buildFolder}/images`,
 };
-
-const {
-  src,
-  dest,
-  series,
-  watch,
-	parallel,
-} = gulp;
 
 let isProd = false; // dev by default
 
@@ -132,14 +133,26 @@ const scripts = () => {
     })
     .pipe(dest(paths.buildJsFolder))
     .pipe(browserSync.stream());
-}
+};
 
 //IMAGES
 //copyimg
 export const copyImages = () => {
-  return src(`${paths.srcImgFolder}/**/*.{png,jpg,svg}`)
+  return src(`${paths.srcImgFolder}/**/*.{png,jpg,svg,webp}`)
   .pipe(dest(`${paths.buildImgFolder}`))
-}
+};
+
+// Copy
+export const copy = (done) => {
+  src([
+    `${paths.srcFontsFolder}/*.{woff2,woff}`,
+    `${srcFolder}*.ico`,
+  ], {
+    base: "source"
+  })
+  .pipe(dest(buildFolder))
+  done();
+};
 
 //Clean
 export const clean = async () => {
@@ -186,19 +199,23 @@ export function runBuild (done) {
 		stylesLESS,
 		scripts,
 		copyImages,
+		copy,
 	)(done);
 }
 
 export function runDev (done) {
 	series(
 		clean,
+		copyImages,
+		copy,
 	)(done)
-	series(
+	parallel(
 		html,
 		stylesLESS,
 		scripts,
-		copyImages,
+	)(done)
+	series(
 		startServer,
-		watchFiles
+		watchFiles,
 	)(done);
 }
