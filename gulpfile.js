@@ -19,6 +19,8 @@ import csso from 'postcss-csso';
 import autoprefixer from 'autoprefixer';
 //JAVASCRIPT
 import webpackStream from 'webpack-stream';
+//OPTIMIZE UTILS
+import sitemap from 'gulp-sitemap';
 
 const {
   src,
@@ -73,11 +75,37 @@ export const stylesLESS = () => {
 };
 
 //HTML
+const siteAddress = 'https://www.example.com/'
 export const html = () => {
   return src([`${srcFolder}/**/*.html`])
   .pipe(htmlmin({ collapseWhitespace: true }))
   .pipe(dest(buildFolder))
+	.pipe(sitemap({
+		siteUrl: siteAddress,
+		changefreq: 'monthly',
+		priority: function(siteUrl, loc, entry) {
+			const prior = () => {
+				if(loc.toString() === siteAddress) {
+					return 1;
+				} else if(loc.split(siteAddress).length > 0) {
+					return 0.9;
+				}
+			};
+			return prior();
+	}
+	}))
+	.pipe(gulp.dest('./app'))
 	.pipe(browserSync.stream());
+};
+
+export const createSiteMap = () => {
+	return src('app/**/*.html', {
+		read: false
+	})
+	.pipe(sitemap({
+			siteUrl: 'http://www.amazon.com'
+	}))
+	.pipe(gulp.dest('./app'));
 };
 
 export const validateMarkup = () => {
