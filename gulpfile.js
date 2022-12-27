@@ -17,6 +17,18 @@ import sourcemap from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
 import csso from 'postcss-csso';
 import autoprefixer from 'autoprefixer';
+//JAVASCRIPT
+import webpackStream from 'webpack-stream';
+//OPTIMIZE UTILS
+import sitemap from 'gulp-sitemap';
+
+const {
+  src,
+  dest,
+  series,
+  watch,
+	parallel,
+} = gulp;
 
 // paths
 const srcFolder = './src';
@@ -27,18 +39,13 @@ const paths = {
   srcImgFolder: `${srcFolder}/images`,
   srcFullJs: `${srcFolder}/scripts/**/*.js`,
   srcMainJs: `${srcFolder}/scripts/index.js`,
+	srcFontsFolder: `${srcFolder}/fonts`,
   buildJsFolder: `${buildFolder}/scripts`,
   buildCssFolder: `${buildFolder}/styles`,
   buildImgFolder: `${buildFolder}/images`,
 };
 
-const {
-  src,
-  dest,
-  series,
-  watch,
-	parallel,
-} = gulp;
+let isProd = false; // dev by default
 
 browserSync.create();
 
@@ -69,12 +76,37 @@ export const stylesLESS = () => {
 
 //HTML
 export const html = () => {
-  return src([`${srcFolder}/**/*.html`])
+	return src([`${srcFolder}/**/*.html`])
   .pipe(htmlmin({ collapseWhitespace: true }))
   .pipe(dest(buildFolder))
+	.pipe(gulp.dest('./app'))
 	.pipe(browserSync.stream());
 };
 
+const siteAddress = 'https://www.example.com/'
+export const htmlBuild = () => {
+  return src([`${srcFolder}/**/*.html`])
+  .pipe(htmlmin({ collapseWhitespace: true }))
+  .pipe(dest(buildFolder))
+	.pipe(sitemap({
+		siteUrl: siteAddress,
+		changefreq: 'monthly',
+		priority: function(siteUrl, loc, entry) {
+			const prior = () => {
+				if(loc.toString() === siteAddress) {
+					return 1;
+				} else if(loc.split(siteAddress).length > 0) {
+					return 0.9;
+				}
+			};
+			return prior();
+	}
+	}))
+	.pipe(gulp.dest('./app'))
+	.pipe(browserSync.stream());
+};
+
+//html tests
 export const validateMarkup = () => {
 	return src(`${srcFolder}/**/*.html`)
 		.pipe(htmlValidator.analyzer())
@@ -86,12 +118,69 @@ export const lintBemMarkup = () => {
 		.pipe(bemlinter())
 }
 
+// SCRIPTS
+const scripts = () => {
+  return src(paths.srcMainJs)
+    .pipe(plumber(
+      notify.onError({
+        title: "JS",
+        message: "Error: <%= error.message %>"
+      })
+    ))
+    .pipe(webpackStream({
+      mode: isProd ? 'production' : 'development',
+      output: {
+        filename: 'bundle.js',
+      },
+			watch: false,
+			devtool: "source-map",
+      module: {
+        rules: [{
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  targets: "> 0.25%, not dead",
+									debug: true,
+									corejs: 3,
+									useBuiltIns: "usage"
+                }]
+              ]
+            }
+          }
+        }]
+      }
+    }))
+    .on('error', function (err) {
+      console.error('WEBPACK ERROR', err);
+      this.emit('end');
+    })
+    .pipe(dest(paths.buildJsFolder))
+    .pipe(browserSync.stream());
+};
+
 //IMAGES
 //copyimg
 export const copyImages = () => {
-  return src(`${paths.srcImgFolder}/**/*.{png,jpg,svg}`)
+  return src(`${paths.srcImgFolder}/**/*.{png,jpg,svg,webp}`)
   .pipe(dest(`${paths.buildImgFolder}`))
-}
+};
+
+// Copy
+export const copy = (done) => {
+  src([
+    `${paths.srcFontsFolder}/*.{woff2,woff}`,
+    `${srcFolder}/*.ico`,
+		`${srcFolder}/manifest.webmanifest`,
+  ], {
+    base: srcFolder
+  })
+  .pipe(dest(buildFolder))
+  done();
+};
 
 //Clean
 export const clean = async () => {
@@ -111,32 +200,50 @@ export function startServer (done) {
 	done();
 };
 
-function reloadServer (done) {
+const reloadServer = (done) => {
 	browserSync.reload();
 	done();
 };
 
-function watchFiles () {
+const watchFiles = () => {
 	watch([`${srcFolder}/less/**/*.less`], series(stylesLESS));
 	watch(`${srcFolder}/*.html`, series(html, reloadServer));
+	watch(`${srcFolder}/scripts/**/*.js`, series(scripts));
 }
+
+const toProd = (done) => {
+  isProd = true;
+  done();
+};
 
 //SCRIPTS build and developer server
 export function runBuild (done) {
 	series(
+		toProd,
 		clean,
 	)(done)
 	parallel(
-		html,
+		htmlBuild,
 		stylesLESS,
+		scripts,
 		copyImages,
+		copy,
 	)(done);
 }
 
 export function runDev (done) {
 	series(
-		runBuild,
+		clean,
+		copyImages,
+		copy,
+	)(done)
+	parallel(
+		html,
+		stylesLESS,
+		scripts,
+	)(done)
+	series(
 		startServer,
-		watchFiles
+		watchFiles,
 	)(done);
 }
