@@ -21,11 +21,9 @@ npm install
 The project template includes several Gulp tasks that you can use for different purposes. Here are the available scripts defined in the package.json file:
 
 - **npm test: Runs the following tasks:**
-
-\*_ **gulp validateMarkup: Validates HTML markup using W3C HTML validator.**
-\*\* **gulp lintBemMarkup: Lints HTML markup using the BEM methodology.**
-\*\* **stylelint "src/styles/**/_.less" --custom-syntax postcss-less: Lints LESS stylesheets using stylelint.\*\*
-
+  - **gulp validateMarkup: Validates HTML markup using W3C HTML validator.**
+  - **gulp lintBemMarkup: Lints HTML markup using the BEM methodology.**
+  - **stylelint "src/styles/**/\_.less" --custom-syntax postcss-less: Lints LESS stylesheets using stylelint.\*\*
 - **npm build: Builds the project for production by running the gulp runBuild task.**
 - **npm start: Runs the project in development mode by executing the gulp runDev task.**
 
@@ -35,12 +33,12 @@ Feel free to modify these scripts in the package.json file to fit your specific 
 
 The project template follows a specific file structure:
 
-src/: Contains the source files for the project.
-styles/: Contains LESS stylesheets.
-img/: Contains image files.
-fonts/: Contains font files.
-scripts/: Contains JavaScript files.
-app/: The build folder where the processed and optimized files are generated.
+- **src/: Contains the source files for the project.**
+  - **styles/: Contains LESS stylesheets.**
+  - **img/: Contains image files.**
+  - **fonts/: Contains font files.**
+  - **scripts/: Contains JavaScript files.**
+- **app/: The build folder where the processed and optimized files are generated.**
 
 ## Gulp Plugins and Dependencies
 
