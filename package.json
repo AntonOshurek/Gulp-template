@@ -17,8 +17,18 @@
     "url": "git+https://github.com/AntonOshurek/Gulp-template.git"
   },
   "keywords": [
-    "gulp",
-    "webpack"
+		"gulp",
+		"gulp-template",
+		"web development",
+		"web project",
+		"build automation",
+		"task runner",
+		"development workflow",
+		"frontend development",
+		"webpack",
+		"Gulp.js",
+		"build process",
+		"optimization"
   ],
   "author": "Anton Oshurek",
   "license": "ISC",
