@@ -11,16 +11,19 @@ import htmlmin from 'gulp-htmlmin';
 import { htmlValidator } from "gulp-w3c-html-validator";
 import bemlinter from "gulp-html-bemlinter";
 //STYLES
-import less from 'gulp-less';
 import plumber from 'gulp-plumber';
 import sourcemap from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
 import csso from 'postcss-csso';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass(dartSass);
 import autoprefixer from 'autoprefixer';
 //JAVASCRIPT
 import webpackStream from 'webpack-stream';
 //OPTIMIZE UTILS
 import sitemap from 'gulp-sitemap';
+
 
 const {
   src,
@@ -34,7 +37,7 @@ const {
 const srcFolder = './src';
 const buildFolder = './app';
 const paths = {
-  srcStyles: `${srcFolder}/styles/index.less`,
+  srcStyles: `${srcFolder}/styles/index.scss`,
   srcSvg: `${srcFolder}/img/svg/**.svg`,
   srcImgFolder: `${srcFolder}/images`,
   srcFullJs: `${srcFolder}/scripts/**/*.js`,
@@ -50,16 +53,16 @@ let isProd = false; // dev by default
 browserSync.create();
 
 // Styles
-export const stylesLESS = () => {
+export const styles = () => {
   return src(paths.srcStyles)
     .pipe(plumber(
 			notify.onError({
-        title: "LESS",
+        title: "SCSS",
         message: "Error: <%= error.message %>"
       })
 		))
     .pipe(sourcemap.init())
-    .pipe(less())
+    .pipe(sass())
     .pipe(postcss([
       autoprefixer({
 				cascade: false,
@@ -206,7 +209,7 @@ const reloadServer = (done) => {
 };
 
 const watchFiles = () => {
-	watch([`${srcFolder}/styles/**/*.less`], series(stylesLESS));
+	watch([`${srcFolder}/styles/**/*.scss`], series(styles));
 	watch(`${srcFolder}/*.html`, series(html, reloadServer));
 	watch(`${srcFolder}/scripts/**/*.js`, series(scripts));
 }
@@ -224,7 +227,7 @@ export function runBuild (done) {
 	)(done)
 	parallel(
 		htmlBuild,
-		stylesLESS,
+		styles,
 		scripts,
 		copyImages,
 		copy,
@@ -237,7 +240,7 @@ export function runDev (done) {
 		copyImages,
 		copy,
 		html,
-		stylesLESS,
+		styles,
 		scripts,
 	)(done)
 	series(
