@@ -13,8 +13,8 @@ import bemlinter from "gulp-html-bemlinter";
 //STYLES
 import plumber from "gulp-plumber";
 import sourcemap from "gulp-sourcemaps";
-import postcss from "gulp-postcss";
-import csso from "postcss-csso";
+import postcss from "gulp-postcss"; /* for run all tasks */
+import cssnano from 'cssnano'; /* minify css */
 import dartSass from "sass";
 import gulpSass from "gulp-sass";
 const sass = gulpSass(dartSass);
@@ -65,7 +65,7 @@ export const styles = () => {
 					grid: true,
 					overrideBrowserslist: ["last 20 versions"],
 				}),
-				csso(), //minify css
+				cssnano()
 			])
 		)
 		.pipe(rename("style.min.css"))
