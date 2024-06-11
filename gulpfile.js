@@ -10,7 +10,7 @@ import { paths } from "./gulp/config/paths.js";
 import { styles } from "./gulp/tasks/styles.js";
 import { lintBemMarkup, htmlBuild, html } from "./gulp/tasks/html.js";
 import { scripts } from "./gulp/tasks/script.js";
-import { copyImages } from "./gulp/tasks/images.js";
+import { copyImages, createWebp } from "./gulp/tasks/images.js";
 import { clean, copy } from "./gulp/tasks/utils.js";
 
 global.app = {
@@ -55,7 +55,7 @@ const toProd = (done) => {
 
 export function runBuild(done) {
 	series(toProd, clean)(done);
-	parallel(htmlBuild, styles, scripts, copyImages, copy)(done);
+	parallel(htmlBuild, styles, scripts, copyImages, copy, createWebp)(done);
 }
 
 export function runDev(done) {
