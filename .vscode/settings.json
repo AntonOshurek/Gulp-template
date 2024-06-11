@@ -1,0 +1,48 @@
+{
+	"git.openRepositoryInParentFolders": "never",
+	"editor.insertSpaces": false,
+	"editor.formatOnPaste": true,
+	"javascript.preferences.quoteStyle": "single",
+	"typescript.preferences.quoteStyle": "single",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"files.insertFinalNewline": true,
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.stylelint": "explicit"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "stylelint.vscode-stylelint"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+		"files.trimFinalNewlines": false
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+		"files.trimFinalNewlines": false
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"window.zoomLevel": 1,
+	"editor.parameterHints.enabled": false,
+	"stylelint.enable": true,
+	"css.validate": false,
+	"scss.validate": false,
+	"stylelint.validate": [
+		"css",
+		"scss",
+		"postcss"
+	],
+	"editor.tabSize": 2,
+	"javascript.updateImportsOnFileMove.enabled": "never",
+}

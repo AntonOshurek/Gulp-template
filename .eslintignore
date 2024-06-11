@@ -1,1 +1,16 @@
+node_modules/
 gulpfile.js
+gulp
+app/
+*.min.js
+*.bundle.js
+*.config.js
+
+# Generated files
+*.json
+*.lock
+*.md
+*.html
+*.css
+*.scss
+*.svg
