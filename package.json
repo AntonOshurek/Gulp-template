@@ -4,13 +4,14 @@
 	"description": "gulp + webpack template for web dev",
 	"main": "index.js",
 	"scripts": {
-		"test-markup": "html-validator --quiet \"./src/**/*.html\" && gulp lintBemMarkup",
-		"stylelint": "stylelint \"./src/styles/**/*.scss\" --custom-syntax postcss-scss",
-		"stylelint--fix": "stylelint \"./src/styles/**/*.scss\" --custom-syntax postcss-scss --fix",
-		"es-lint": "eslint src/**/*.js",
-		"test-editorconfig": "editorconfig-checker",
 		"build": "gulp runBuild",
-		"start": "gulp runDev"
+		"start": "gulp runDev",
+		"test-js": "eslint src/**/*.js",
+		"test-editorconfig": "editorconfig-checker",
+		"test-styles": "stylelint \"./src/styles/**/*.scss\" --custom-syntax postcss-scss",
+		"test-styles--fix": "stylelint \"./src/styles/**/*.scss\" --custom-syntax postcss-scss --fix",
+		"test-markup": "html-validator --quiet \"./src/**/*.html\" && gulp lintBemMarkup",
+		"tests": "npm run test-js && npm run test-editorconfig && npm run test-styles && npm run test-markup"
 	},
 	"engines": {
 		"node": ">=18"

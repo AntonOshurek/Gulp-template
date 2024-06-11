@@ -1,0 +1,14 @@
+{
+	"exclude": [
+		"node_modules",
+		".github",
+		"manifest.webmanifest",
+		"app",
+		"vendor",
+		"gulpfile.js",
+		"package.json",
+		".stylelintrc",
+		"\\.md$",
+		"\\.php$"
+	]
+}
