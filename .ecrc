@@ -4,11 +4,9 @@
 		".github",
 		"manifest.webmanifest",
 		"app",
-		"vendor",
 		"gulpfile.js",
 		"package.json",
 		".stylelintrc",
-		"\\.md$",
-		"\\.php$"
+		"\\.md$"
 	]
 }
