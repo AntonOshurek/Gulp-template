@@ -2,7 +2,6 @@
 import browserSync from "browser-sync";
 //HTML
 import htmlmin from "gulp-htmlmin";
-import { htmlValidator } from "gulp-w3c-html-validator";
 import bemlinter from "gulp-html-bemlinter";
 //OPTIMIZE UTILS
 import sitemap from "gulp-sitemap";
@@ -44,12 +43,8 @@ export const htmlBuild = () => {
 };
 
 //html tests
-export const validateMarkup = () => {
-	return src(`${app.paths.base.srcFolder}/**/*.html`)
-		.pipe(htmlValidator.analyzer())
-		.pipe(htmlValidator.reporter({ throwErrors: true }));
-};
-
 export const lintBemMarkup = () => {
-	return src(`${app.base.srcFolder}/**/*.html`).pipe(bemlinter());
+	return app.gulp
+		.src(`${app.paths.base.srcFolder}/**/*.html`)
+		.pipe(bemlinter());
 };

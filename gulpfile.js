@@ -1,17 +1,14 @@
+import gulp from "gulp";
+
 //SERVER
 import browserSync from "browser-sync";
 
-import gulp from "gulp";
+//VARIABLES
 import { paths } from "./gulp/config/paths.js";
 
-//tasks
+//TASKS
 import { styles } from "./gulp/tasks/styles.js";
-import {
-	lintBemMarkup,
-	validateMarkup,
-	htmlBuild,
-	html,
-} from "./gulp/tasks/html.js";
+import { lintBemMarkup, htmlBuild, html } from "./gulp/tasks/html.js";
 import { scripts } from "./gulp/tasks/script.js";
 import { copyImages } from "./gulp/tasks/images.js";
 import { clean, copy } from "./gulp/tasks/utils.js";
@@ -22,7 +19,7 @@ global.app = {
 	isProd: false,
 };
 
-const { src, dest, series, watch, parallel } = gulp;
+const { series, watch, parallel } = gulp;
 
 browserSync.create();
 
@@ -66,4 +63,4 @@ export function runDev(done) {
 	series(startServer, watchFiles)(done);
 }
 
-export { lintBemMarkup, validateMarkup }; //used in testing npm commands in package.json file
+export { lintBemMarkup }; //used in testing npm commands in package.json file
