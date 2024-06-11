@@ -1,5 +1,5 @@
 import gulpif from "gulp-if";
-import imagemin, { gifsicle, mozjpeg, optipng } from "gulp-imagemin";
+import imagemin, { mozjpeg, optipng } from "gulp-imagemin";
 import newer from "gulp-newer";
 import webp from "gulp-webp";
 
@@ -16,7 +16,6 @@ export const copyImages = () => {
 			gulpif(
 				app.isProd,
 				imagemin([
-					gifsicle({ interlaced: true }),
 					mozjpeg({ quality: 75, progressive: true }),
 					optipng({ optimizationLevel: 2 }),
 				])
