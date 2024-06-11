@@ -9,9 +9,9 @@ import sitemap from "gulp-sitemap";
 
 export const html = () => {
 	return app.gulp
-		.src([`${app.base.srcFolder}/**/*.html`])
+		.src([`${app.paths.base.srcFolder}/**/*.html`])
 		.pipe(htmlmin({ collapseWhitespace: true }))
-		.pipe(app.gulp.dest(app.base.buildFolder))
+		.pipe(app.gulp.dest(app.paths.base.buildFolder))
 		.pipe(app.gulp.dest("./app"))
 		.pipe(browserSync.stream());
 };
