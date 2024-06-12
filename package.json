@@ -14,7 +14,7 @@
 		"tests": "npm run test-js && npm run test-editorconfig && npm run test-styles && npm run test-markup"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=20"
 	},
 	"type": "module",
 	"repository": {
