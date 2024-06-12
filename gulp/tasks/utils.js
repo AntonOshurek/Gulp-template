@@ -5,7 +5,6 @@ export const copy = (done) => {
 	app.gulp
 		.src(
 			[
-				// `${app.paths.srcFontsFolder}/*.{woff2,woff}`,
 				`${app.paths.base.srcFolder}/*.ico`,
 				`${app.paths.base.srcFolder}/manifest.webmanifest`,
 			],
