@@ -1,89 +1,97 @@
-@import './mixins';
+@import "./mixins";
 
 // LARGE
 
 .paragraph-large {
-  @include basic-properties(400, 18px, 28px);
+	@include basic-properties(400, 18px, 28px);
 }
 
 .paragraph-large-secondary {
-  @include secondary;
-  @extend .paragraph-large;
+	@include secondary;
+
+	@extend .paragraph-large;
 }
 
 .paragraph-large-bold {
-  @include bold;
-  @extend .paragraph-large;
+	@include bold;
+
+	@extend .paragraph-large;
 }
 
 .paragraph-large-secondary-bold {
-  @extend .paragraph-large;
-  @extend .paragraph-large-bold;
-  @extend .paragraph-large-secondary;
+	@extend .paragraph-large;
+	@extend .paragraph-large-bold;
+	@extend .paragraph-large-secondary;
 }
 
 // MEDIUM
 
 .paragraph-medium {
-  @include basic-properties(400, 16px, 24px);
+	@include basic-properties(400, 16px, 24px);
 }
 
 .paragraph-medium-secondary {
-  @include secondary;
-  @extend .paragraph-medium;
+	@include secondary;
+
+	@extend .paragraph-medium;
 }
 
 .paragraph-medium-bold {
-  @include bold;
-  @extend .paragraph-medium;
+	@include bold;
+
+	@extend .paragraph-medium;
 }
 
 .paragraph-medium-secondary-bold {
-  @extend .paragraph-medium;
-  @extend .paragraph-medium-bold;
-  @extend .paragraph-medium-secondary;
+	@extend .paragraph-medium;
+	@extend .paragraph-medium-bold;
+	@extend .paragraph-medium-secondary;
 }
 
 // SMALL
 
 .paragraph-small {
-  @include basic-properties(400, 14px, 20px);
+	@include basic-properties(400, 14px, 20px);
 }
 
 .paragraph-small-secondary {
-  @include secondary;
-  @extend .paragraph-small;
+	@include secondary;
+
+	@extend .paragraph-small;
 }
 
 .paragraph-small-bold {
-  @include bold;
-  @extend .paragraph-small;
+	@include bold;
+
+	@extend .paragraph-small;
 }
 
 .paragraph-small-secondary-bold {
-  @extend .paragraph-small;
-  @extend .paragraph-small-bold;
-  @extend .paragraph-small-secondary;
+	@extend .paragraph-small;
+	@extend .paragraph-small-bold;
+	@extend .paragraph-small-secondary;
 }
 
 // X SMALL
 
 .paragraph-x-small {
-  @include basic-properties(400, 12px, 20px);
+	@include basic-properties(400, 12px, 20px);
 }
 
 .paragraph-x-small-secondary {
-  @include secondary;
-  @extend .paragraph-x-small;
+	@include secondary;
+
+	@extend .paragraph-x-small;
 }
 
 .paragraph-x-small-bold {
-  @include bold;
-  @extend .paragraph-x-small;
+	@include bold;
+
+	@extend .paragraph-x-small;
 }
 
 .paragraph-x-small-secondary-bold {
-  @extend .paragraph-x-small;
-  @extend .paragraph-x-small-bold;
-  @extend .paragraph-x-small-secondary;
+	@extend .paragraph-x-small;
+	@extend .paragraph-x-small-bold;
+	@extend .paragraph-x-small-secondary;
 }

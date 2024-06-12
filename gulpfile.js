@@ -46,6 +46,7 @@ export const startServer = (done) => {
 const watchFiles = () => {
 	watch([`${paths.base.srcFolder}/styles/**/*.scss`], series(styles));
 	watch(`${paths.base.srcFolder}/*.html`, series(html, reloadServer));
+	watch(`${paths.base.srcFolder}/*.html`, series(html, htmlInclude));
 	watch(`${app.paths.srcHTMLComponentsFolder}/*.html`, htmlInclude);
 	watch(`${paths.base.srcFolder}/scripts/**/*.js`, series(scripts));
 	watch(
