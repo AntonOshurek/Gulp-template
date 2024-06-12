@@ -46,6 +46,11 @@ const watchFiles = () => {
 	watch([`${paths.base.srcFolder}/styles/**/*.scss`], series(styles));
 	watch(`${paths.base.srcFolder}/*.html`, series(html, reloadServer));
 	watch(`${paths.base.srcFolder}/scripts/**/*.js`, series(scripts));
+	watch(
+		`${paths.base.srcFolder}/images/**/*.{png,jpg,svg,webp}`,
+		series(copyImages)
+	);
+	watch(`${paths.base.srcFolder}/images/**/*.{png,jpg}`, series(createWebp));
 };
 
 const toProd = (done) => {
