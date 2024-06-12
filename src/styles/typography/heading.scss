@@ -1,0 +1,145 @@
+@import "./mixins";
+
+// XX LARGE
+
+.heading-xx-large {
+	@include basic-properties(700, 40px, 52px);
+}
+
+.heading-xx-large-secondary {
+	@include secondary;
+
+	@extend .heading-xx-large;
+}
+
+.heading-xx-large-bold {
+	@include bold;
+
+	@extend .heading-xx-large;
+}
+
+.heading-xx-large-secondary-bold {
+	@extend .heading-xx-large;
+	@extend .heading-xx-large-bold;
+	@extend .heading-xx-large-secondary;
+}
+
+// X LARGE
+
+.heading-x-large {
+	@include basic-properties(700, 36px, 44px);
+}
+
+.heading-x-large-secondary {
+	@include secondary;
+
+	@extend .heading-x-large;
+}
+
+.heading-x-large-bold {
+	@include bold;
+
+	@extend .heading-x-large;
+}
+
+.heading-x-large-secondary-bold {
+	@extend .heading-x-large;
+	@extend .heading-x-large-bold;
+	@extend .heading-x-large-secondary;
+}
+
+// LARGE
+
+.heading-large {
+	@include basic-properties(700, 32px, 40px);
+}
+
+.heading-large-secondary {
+	@include secondary;
+
+	@extend .heading-large;
+}
+
+.heading-large-bold {
+	@include bold;
+
+	@extend .heading-large;
+}
+
+.heading-large-secondary-bold {
+	@extend .heading-large;
+	@extend .heading-large-bold;
+	@extend .heading-large-secondary;
+}
+
+// MEDIUM
+
+.heading-medium {
+	@include basic-properties(700, 28px, 36px);
+}
+
+.heading-medium-secondary {
+	@include secondary;
+
+	@extend .heading-medium;
+}
+
+.heading-medium-bold {
+	@include bold;
+
+	@extend .heading-medium;
+}
+
+.heading-medium-secondary-bold {
+	@extend .heading-medium;
+	@extend .heading-medium-bold;
+	@extend .heading-medium-secondary;
+}
+
+// SMALL
+
+.heading-small {
+	@include basic-properties(700, 24px, 32px);
+}
+
+.heading-small-secondary {
+	@include secondary;
+
+	@extend .heading-small;
+}
+
+.heading-small-bold {
+	@include bold;
+
+	@extend .heading-small;
+}
+
+.heading-small-secondary-bold {
+	@extend .heading-small;
+	@extend .heading-small-bold;
+	@extend .heading-small-secondary;
+}
+
+// X SMALL
+
+.heading-x-small {
+	@include basic-properties(700, 20px, 28px);
+}
+
+.heading-x-small-secondary {
+	@include secondary;
+
+	@extend .heading-x-small;
+}
+
+.heading-x-small-bold {
+	@include bold;
+
+	@extend .heading-x-small;
+}
+
+.heading-x-small-secondary-bold {
+	@extend .heading-x-small;
+	@extend .heading-x-small-bold;
+	@extend .heading-x-small-secondary;
+}

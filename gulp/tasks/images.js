@@ -26,9 +26,10 @@ export const copyImages = () => {
 
 export const createWebp = () => {
 	return app.gulp
-		.src([`${app.paths.srcImgFolder}/**/*.{png,jpg,webp}`], {
+		.src([`${app.paths.srcImgFolder}/**/*.{png,jpg}`], {
 			encoding: false,
 		})
+		.pipe(newer(app.paths.buildImgFolder))
 		.pipe(webp({ quality: 75 }))
 		.pipe(app.gulp.dest(`${app.paths.buildImgFolder}`));
 };

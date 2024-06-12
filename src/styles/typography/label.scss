@@ -1,0 +1,97 @@
+@import "./mixins";
+
+// LARGE
+
+.label-large {
+	@include basic-properties(500, 18px, 24px);
+}
+
+.label-large-secondary {
+	@include secondary;
+
+	@extend .label-large;
+}
+
+.label-large-regular {
+	@include regular;
+
+	@extend .label-large;
+}
+
+.label-large-secondary-regular {
+	@extend .label-large;
+	@extend .label-large-regular;
+	@extend .label-large-secondary;
+}
+
+// MEDIUM
+
+.label-medium {
+	@include basic-properties(500, 16px, 20px);
+}
+
+.label-medium-secondary {
+	@include secondary;
+
+	@extend .label-medium;
+}
+
+.label-medium-regular {
+	@include regular;
+
+	@extend .label-medium;
+}
+
+.label-medium-secondary-regular {
+	@extend .label-medium;
+	@extend .label-medium-regular;
+	@extend .label-medium-secondary;
+}
+
+// SMALL
+
+.label-small {
+	@include basic-properties(500, 14px, 16px);
+}
+
+.label-small-secondary {
+	@include secondary;
+
+	@extend .label-small;
+}
+
+.label-small-regular {
+	@include regular;
+
+	@extend .label-small;
+}
+
+.label-small-secondary-regular {
+	@extend .label-small;
+	@extend .label-small-regular;
+	@extend .label-small-secondary;
+}
+
+// X SMALL
+
+.label-x-small {
+	@include basic-properties(500, 12px, 16px);
+}
+
+.label-x-small-secondary {
+	@include secondary;
+
+	@extend .label-x-small;
+}
+
+.label-x-small-regular {
+	@include regular;
+
+	@extend .label-x-small;
+}
+
+.label-x-small-secondary-regular {
+	@extend .label-x-small;
+	@extend .label-x-small-regular;
+	@extend .label-x-small-secondary;
+}
