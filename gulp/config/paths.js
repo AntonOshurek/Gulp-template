@@ -12,6 +12,7 @@ export const paths = {
 	srcFullJs: `${srcFolder}/scripts/**/*.js`,
 	srcMainJs: `${srcFolder}/scripts/index.js`,
 	srcFontsFolder: `${srcFolder}/fonts`,
+	srcHTMLComponentsFolder: `${srcFolder}/components`,
 	buildJsFolder: `${buildFolder}/scripts`,
 	buildCssFolder: `${buildFolder}/styles`,
 	buildImgFolder: `${buildFolder}/images`,
