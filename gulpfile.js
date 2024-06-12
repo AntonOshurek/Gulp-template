@@ -67,15 +67,18 @@ const toProd = (done) => {
 };
 
 export function runBuild(done) {
-	series(toProd, clean)(done);
-	parallel(
-		htmlBuild,
-		styles,
-		scripts,
-		copyImages,
-		copy,
-		createWebp,
-		htmlInclude
+	series(
+		toProd,
+		clean,
+		parallel(
+			htmlBuild,
+			styles,
+			scripts,
+			copyImages,
+			copy,
+			createWebp,
+			htmlInclude
+		)(done)
 	)(done);
 }
 

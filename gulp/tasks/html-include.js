@@ -2,7 +2,7 @@ import browserSync from "browser-sync";
 import fileInclude from "gulp-file-include";
 import typograf from "gulp-typograf";
 
-export function htmlInclude() {
+export const htmlInclude = () => {
 	return app.gulp
 		.src([`${app.paths.base.srcFolder}/*.html`])
 		.pipe(
@@ -19,4 +19,4 @@ export function htmlInclude() {
 		)
 		.pipe(app.gulp.dest(app.paths.base.buildFolder))
 		.pipe(browserSync.stream());
-}
+};
