@@ -6,7 +6,7 @@ import bemlinter from "gulp-html-bemlinter";
 //OPTIMIZE UTILS
 import sitemap from "gulp-sitemap";
 
-export const html = (done) => {
+export const html = () => {
 	return app.gulp
 		.src([`${app.paths.base.srcFolder}/**/*.html`])
 		.pipe(htmlmin({ collapseWhitespace: true }))
