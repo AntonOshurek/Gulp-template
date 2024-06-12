@@ -45,12 +45,11 @@ export const startServer = (done) => {
 
 const watchFiles = () => {
 	watch([`${paths.base.srcFolder}/styles/**/*.scss`], series(styles));
-	watch(`${paths.base.srcFolder}/*.html`, series(html, reloadServer));
-	watch(`${paths.base.srcFolder}/*.html`, series(htmlInclude, reloadServer));
 	watch(
-		`${app.paths.srcHTMLComponentsFolder}/*.html`,
-		series(htmlInclude, reloadServer)
+		`${paths.base.srcFolder}/*.html`,
+		series(html, htmlInclude, reloadServer)
 	);
+	watch(`${app.paths.srcHTMLComponentsFolder}/*.html`, series(htmlInclude));
 	watch(`${paths.base.srcFolder}/scripts/**/*.js`, series(scripts));
 	watch(
 		`${paths.base.srcFolder}/images/**/*.{png,jpg,jpeg,svg,webp}`,
@@ -82,7 +81,7 @@ export function runBuild(done) {
 
 export function runDev(done) {
 	series(
-		htmlBuild,
+		html,
 		styles,
 		scripts,
 		copyImages,
