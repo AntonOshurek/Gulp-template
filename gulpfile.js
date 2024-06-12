@@ -46,14 +46,20 @@ export const startServer = (done) => {
 const watchFiles = () => {
 	watch([`${paths.base.srcFolder}/styles/**/*.scss`], series(styles));
 	watch(`${paths.base.srcFolder}/*.html`, series(html, reloadServer));
-	watch(`${paths.base.srcFolder}/*.html`, series(html, htmlInclude));
-	watch(`${app.paths.srcHTMLComponentsFolder}/*.html`, htmlInclude);
+	watch(`${paths.base.srcFolder}/*.html`, series(htmlInclude, reloadServer));
+	watch(
+		`${app.paths.srcHTMLComponentsFolder}/*.html`,
+		series(htmlInclude, reloadServer)
+	);
 	watch(`${paths.base.srcFolder}/scripts/**/*.js`, series(scripts));
 	watch(
-		`${paths.base.srcFolder}/images/**/*.{png,jpg,svg,webp}`,
+		`${paths.base.srcFolder}/images/**/*.{png,jpg,jpeg,svg,webp}`,
 		series(copyImages)
 	);
-	watch(`${paths.base.srcFolder}/images/**/*.{png,jpg}`, series(createWebp));
+	watch(
+		`${paths.base.srcFolder}/images/**/*.{png,jpg,jpeg}`,
+		series(createWebp)
+	);
 };
 
 const toProd = (done) => {
@@ -75,7 +81,15 @@ export function runBuild(done) {
 }
 
 export function runDev(done) {
-	series(clean, copyImages, copy, html, styles, scripts, htmlInclude)(done);
+	series(
+		htmlBuild,
+		styles,
+		scripts,
+		copyImages,
+		copy,
+		createWebp,
+		htmlInclude
+	)(done);
 	series(startServer, watchFiles)(done);
 }
 
