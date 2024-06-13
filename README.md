@@ -2,6 +2,8 @@
 
 This is a Gulp project template for web development that utilizes Gulp, Webpack, and various plugins to streamline the development process. It provides tasks for building, optimizing, and serving web projects.
 
+This template based on **_[maxgraph gulp template](https://github.com/maxdenaro/gulp-maxgraph):bank:_**
+
 ## Installation
 
 Before using the project template, ensure that you have Node.js installed on your machine. Then, follow these steps:
