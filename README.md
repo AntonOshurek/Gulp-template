@@ -20,12 +20,14 @@ npm install
 
 The project template includes several Gulp tasks that you can use for different purposes. Here are the available scripts defined in the package.json file:
 
-- **npm test: Runs the following tasks:**
-  - **gulp validateMarkup: Validates HTML markup using W3C HTML validator.**
-  - **gulp lintBemMarkup: Lints HTML markup using the BEM methodology.**
-  - **stylelint "src/styles/**/\_.less" --custom-syntax postcss-less: Lints LESS stylesheets using stylelint.\*\*
-- **npm build: Builds the project for production by running the gulp runBuild task.**
-- **npm start: Runs the project in development mode by executing the gulp runDev task.**
+- **npm run tests: Runs the following tasks:**
+  - **eslint**
+  - **stylelint**
+  - **html-validator**
+  - **lintBemMarkup**
+  - **editorconfig-checker**
+- **npm run build: Builds the project for production by running the gulp runBuild task.**
+- **npm run start: Runs the project in development mode by executing the gulp runDev task.**
 
 Feel free to modify these scripts in the package.json file to fit your specific project requirements.
 
@@ -33,12 +35,15 @@ Feel free to modify these scripts in the package.json file to fit your specific 
 
 The project template follows a specific file structure:
 
+- **.github/: Contains github .yml files to deploy app on gh-pages**
+- **app/: The build folder where the processed and optimized files are generated.**
+- **gulp/: Contains all gulp tasks and config**
 - **src/: Contains the source files for the project.**
-  - **styles/: Contains LESS stylesheets.**
-  - **img/: Contains image files.**
+  - **styles/: Contains SCSS stylesheets.**
+  - **images/: Contains image files.**
   - **fonts/: Contains font files.**
   - **scripts/: Contains JavaScript files.**
-- **app/: The build folder where the processed and optimized files are generated.**
+  - **components/: Contains HTML files for include.**
 
 ## Gulp Plugins and Dependencies
 
@@ -48,7 +53,6 @@ The project template utilizes several Gulp plugins and dependencies to perform v
 - **browser-sync: A development server that allows live reloading.**
 - **gulp-html-bemlinter: A plugin for linting HTML markup using the BEM methodology.**
 - **gulp-htmlmin: A plugin for minifying HTML files.**
-- **gulp-less: A plugin for compiling LESS stylesheets.**
 - **gulp-notify: A plugin for displaying notifications during the Gulp tasks.**
 - **gulp-postcss: A plugin for transforming CSS with JavaScript and PostCSS.**
 - **gulp-rename: A plugin for renaming files.**
