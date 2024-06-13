@@ -1,2 +1,2 @@
-(()=>{"use strict";window.addEventListener("DOMContentLoaded",(()=>{console.log("Hello from gulp :)")}))})();
+(()=>{"use strict";window.addEventListener("DOMContentLoaded",(()=>{}))})();
 //# sourceMappingURL=bundle.js.map
