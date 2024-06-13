@@ -57,7 +57,9 @@ The project template utilizes several Gulp plugins and dependencies to perform v
 - **gulp-postcss: A plugin for transforming CSS with JavaScript and PostCSS.**
 - **gulp-rename: A plugin for renaming files.**
 - **gulp-sourcemaps: A plugin for generating sourcemaps.**
-- **gulp-w3c-html-validator: A plugin for validating HTML markup using the W3C HTML validator.**
+- **gulp-imagemin: A plugin for minify and optimize images.**
+- **gulp-webp: A plugin for transform images to webp format.**
+- **w3c-html-validator: A plugin for validating HTML markup using the W3C HTML validator.**
 - **gulp-sitemap: A plugin for generating sitemaps.**
 - **stylelint: A linter for CSS and LESS stylesheets.**
 - **webpack: A module bundler for JavaScript.**
