@@ -1,3 +1,6 @@
+![commits](https://img.shields.io/github/last-commit/AntonOshurek/Gulp-template?style=plastic)
+![lang](https://img.shields.io/github/languages/top/AntonOshurek/Gulp-template)
+
 # Gulp Project Template
 
 This is a Gulp project template for web development that utilizes Gulp, Webpack, and various plugins to streamline the development process. It provides tasks for building, optimizing, and serving web projects.
